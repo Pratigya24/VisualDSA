@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # VisualDSA AI
 
 An AI-powered, visualization-first platform for learning Data Structures &
@@ -70,3 +71,7 @@ backend/   FastAPI, Clean Architecture (api → services → engines → reposit
 frontend/  React 19 + TS + Vite, feature-based architecture
 docs/      Architecture, SRS, API design, roadmap
 ```
+=======
+# VisualDSA
+Having visual to understand the code
+>>>>>>> 56a2c2bb2ca501f4b754bfbe55f608f11555b5d2
