@@ -1,0 +1,37 @@
+services:
+  api:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/keys:/app/keys:ro
+
+  worker:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    command: ["celery", "-A", "app.core.celery_app.celery_app", "worker", "--loglevel=info"]
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend/keys:/app/keys:ro
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-/api/v1}
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+# mongo and redis are NOT defined here — production uses managed MongoDB
+# Atlas and a managed Redis instance (see Deployment Architecture §11),
+# referenced via MONGODB_URI / REDIS_URL in backend/.env. Only local
+# development (docker-compose.yml) runs them as containers.
